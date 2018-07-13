@@ -18,7 +18,7 @@ class ProdutoResource {
 
     @GetMapping
     fun list(): ResponseEntity<List<Produto>>{
-        return ResponseEntity.ok(produtos.findAllByOrderByCodigoAsc().toList())
+        return ResponseEntity.ok(produtos.findAllByOrderByCodigoAsc())
     }
 
     @GetMapping(value = "/{codigo}")
