@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.time.LocalDateTime
 
 @CrossOrigin
 @RestController
@@ -44,7 +45,7 @@ class ProdutoResource {
     @PutMapping(value = "/{codigo}")
     fun update(@PathVariable("codigo") codigo: Int, @RequestBody produto: Produto): ResponseEntity<Produto>{
         if(produtos.existsById(codigo)){
-            return ResponseEntity.accepted().body(produtos.save(produto.copy(codigo)))
+            return ResponseEntity.accepted().body(produtos.save(produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())))
         }
         return ResponseEntity.notFound().build()
     }
