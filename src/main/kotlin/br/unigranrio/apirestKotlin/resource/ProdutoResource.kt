@@ -36,7 +36,7 @@ class ProdutoResource {
 
     @PostMapping
     fun add(@RequestBody produto: Produto): ResponseEntity<Produto>{
-        var produto : Produto = produtos.save(produto)
+        val produto : Produto = produtos.save(produto)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}")
                 .buildAndExpand(produto.codigo).toUri()
         return ResponseEntity.created(uri).body(produto)
@@ -45,7 +45,8 @@ class ProdutoResource {
     @PutMapping(value = "/{codigo}")
     fun update(@PathVariable("codigo") codigo: Int, @RequestBody produto: Produto): ResponseEntity<Produto>{
         if(produtos.existsById(codigo)){
-            return ResponseEntity.accepted().body(produtos.save(produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())))
+            val produto : Produto = produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())
+            return ResponseEntity.accepted().body(produtos.save(produto))
         }
         return ResponseEntity.notFound().build()
     }
