@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 class ProdutoResource {
 
     @Autowired
-    lateinit var produtos : Produtos;
+    lateinit var produtos: Produtos;
 
     @GetMapping
     fun list(): ResponseEntity<List<Produto>>{
@@ -36,7 +36,8 @@ class ProdutoResource {
 
     @PostMapping
     fun add(@RequestBody produto: Produto): ResponseEntity<Produto>{
-        val produto : Produto = produtos.save(produto)
+        val produtoNull: Produto = produto.copy(null, produto.nome, produto.codigoBarras, LocalDateTime.now())
+        val produto: Produto = produtos.save(produtoNull)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}")
                 .buildAndExpand(produto.codigo).toUri()
         return ResponseEntity.created(uri).body(produto)
@@ -45,7 +46,7 @@ class ProdutoResource {
     @PutMapping(value = "/{codigo}")
     fun update(@PathVariable("codigo") codigo: Int, @RequestBody produto: Produto): ResponseEntity<Produto>{
         if(produtos.existsById(codigo)){
-            val produto : Produto = produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())
+            val produto: Produto = produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())
             return ResponseEntity.accepted().body(produtos.save(produto))
         }
         return ResponseEntity.notFound().build()
