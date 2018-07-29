@@ -10,4 +10,6 @@ interface Produtos : JpaRepository<Produto, Int> {
 
     @Query(value = "SELECT * FROM PRODUTO p order by p.codigo desc limit 1", nativeQuery = true)
     fun findLast(): Produto
+
+    fun existsByCodigoBarras(codigoBarras: String): Boolean
 }

@@ -36,6 +36,11 @@ class ProdutoResource {
 
     @PostMapping
     fun add(@RequestBody produto: Produto): ResponseEntity<Produto>{
+
+        if(produtos.existsByCodigoBarras(produto.codigoBarras)) {
+            return ResponseEntity.status(400).build();
+        }
+
         val produtoNull: Produto = produto.copy(null, produto.nome, produto.codigoBarras, LocalDateTime.now())
         val produto: Produto = produtos.save(produtoNull)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}")

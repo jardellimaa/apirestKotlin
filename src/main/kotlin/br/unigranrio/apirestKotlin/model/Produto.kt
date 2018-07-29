@@ -12,7 +12,7 @@ data class Produto (@Id
                     @Column(nullable = false)
                     val nome: String = "",
                     
-                    @Column(name = "codigo_barras", nullable = false)
+                    @Column(name = "codigo_barras", unique=true, nullable = false)
                     val codigoBarras: String = "",
                     
                     @Column(nullable = false)
