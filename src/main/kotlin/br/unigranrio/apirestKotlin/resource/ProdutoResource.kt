@@ -51,8 +51,8 @@ class ProdutoResource {
     @PutMapping(value = "/{codigo}")
     fun update(@PathVariable("codigo") codigo: Int, @RequestBody produto: Produto): ResponseEntity<Produto>{
         if(produtos.existsById(codigo)){
-            val produto: Produto = produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())
-            return ResponseEntity.accepted().body(produtos.save(produto))
+            val produtoEditado: Produto = produto.copy(codigo, produto.nome, produto.codigoBarras, LocalDateTime.now())
+            return ResponseEntity.accepted().body(produtos.save(produtoEditado))
         }
         return ResponseEntity.notFound().build()
     }
